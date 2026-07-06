@@ -26,7 +26,7 @@ ENV = Config(RepositoryEnv(BASE_DIR / "config" / ".env"))
 SECRET_KEY = ENV("SECRET_KEY", default="django-insecure-)t!oojug2@6x^h-n$kk#o-d5!!ap#cu_%s(w%8y0z6i5zad6m*")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = ENV("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "watsapp-follow-up.onrender.com",]
 
