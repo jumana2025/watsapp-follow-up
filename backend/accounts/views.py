@@ -1,10 +1,16 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate
+from rest_framework import generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import LoginSerializer
+from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
+
+class RegisterView(generics.CreateAPIView):
+    authentication_classes = []
+    permission_classes = []
+    serializer_class = RegisterSerializer
 
 class LoginView(APIView):
     authentication_classes = []
@@ -27,7 +33,12 @@ class LoginView(APIView):
             "message": "Login Successful",
             "access": str(refresh.access_token),
             "refresh": str(refresh),
-            "username": user.username
-                   
-                                 })
+            "user": UserSerializer(user).data
+        })
 
+class ProfileView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
