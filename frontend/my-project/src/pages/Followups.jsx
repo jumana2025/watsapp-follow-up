@@ -19,6 +19,12 @@ function FollowUps() {
     const [editingFollowUp, setEditingFollowUp] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [activeFilter, setActiveFilter] = useState("All");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery, activeFilter]);
 
     const handleExport = async () => {
         try {
@@ -187,11 +193,35 @@ function FollowUps() {
                 </div>
 
                 <FollowUpTable
-                    followups={filteredFollowups}
+                    followups={filteredFollowups.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)}
                     onEdit={handleEdit}
                     onDelete={handleDelete}
                     onMarkDone={handleMarkDone}
                 />
+                
+                {filteredFollowups.length > 0 && (
+                    <div className="px-6 py-4 bg-white border border-slate-100 rounded-b-2xl shadow-sm -mt-6 flex items-center justify-between">
+                        <span className="text-sm text-slate-500">
+                            Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, filteredFollowups.length)} of {filteredFollowups.length} entries
+                        </span>
+                        <div className="flex gap-2">
+                            <button 
+                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                disabled={currentPage === 1}
+                                className="px-3 py-1.5 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Previous
+                            </button>
+                            <button 
+                                onClick={() => setCurrentPage(p => Math.min(Math.ceil(filteredFollowups.length / itemsPerPage), p + 1))}
+                                disabled={currentPage === Math.ceil(filteredFollowups.length / itemsPerPage)}
+                                className="px-3 py-1.5 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
 
             <FollowUpForm

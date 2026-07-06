@@ -19,6 +19,12 @@ function Customers() {
     const [statusFilter, setStatusFilter] = useState("ALL");
     const [editingCustomer, setEditingCustomer] = useState(null);
     const [formError, setFormError] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, statusFilter]);
 
     useEffect(() => {
         localStorage.setItem("customerSearch", search);
@@ -257,7 +263,7 @@ function Customers() {
                                         <td colSpan="7" className="px-6 py-10 text-center text-slate-500">Loading customers...</td>
                                     </tr>
                                 ) : filteredCustomers.length > 0 ? (
-                                    filteredCustomers.map((customer) => (
+                                    filteredCustomers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((customer) => (
                                         <tr key={customer.id} className="hover:bg-slate-50">
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-3">
@@ -321,6 +327,29 @@ function Customers() {
                             </tbody>
                         </table>
                     </div>
+                    {filteredCustomers.length > 0 && (
+                        <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between">
+                            <span className="text-sm text-slate-500">
+                                Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, filteredCustomers.length)} of {filteredCustomers.length} entries
+                            </span>
+                            <div className="flex gap-2">
+                                <button 
+                                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                    disabled={currentPage === 1}
+                                    className="px-3 py-1.5 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    Previous
+                                </button>
+                                <button 
+                                    onClick={() => setCurrentPage(p => Math.min(Math.ceil(filteredCustomers.length / itemsPerPage), p + 1))}
+                                    disabled={currentPage === Math.ceil(filteredCustomers.length / itemsPerPage)}
+                                    className="px-3 py-1.5 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <CustomerForm
