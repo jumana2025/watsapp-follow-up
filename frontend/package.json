@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "vercel-build": "cd my-project && npm install --legacy-peer-deps && npm run build",
+    "build": "cd my-project && npm install --legacy-peer-deps && npm run build"
+  },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.2",
     "axios": "^1.18.1",
