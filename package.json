@@ -1,0 +1,7 @@
+{
+  "name": "watsapp-follow-up",
+  "version": "1.0.0",
+  "scripts": {
+    "vercel-build": "cd frontend/my-project && npm install --legacy-peer-deps && npm run build"
+  }
+}
