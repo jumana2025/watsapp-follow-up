@@ -28,7 +28,7 @@ SECRET_KEY = ENV("SECRET_KEY", default="django-insecure-)t!oojug2@6x^h-n$kk#o-d5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "watsapp-follow-up.onrender.com",]
 
 
 # Application definition
