@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import DashboardLayout from "../components/layout/DashboardLayout";
-import FollowUpForm from "../components/followups/FollowUpForm";
-import FollowUpTable from "../components/followups/FollowUpTable";
+import FollowUpForm from "../components/followups/FollowupForm";
+import FollowUpTable from "../components/followups/FollowupTable";
 
 import {
     getFollowUps,

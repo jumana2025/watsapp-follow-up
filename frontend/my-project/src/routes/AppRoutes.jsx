@@ -4,7 +4,7 @@ import Dashboard from "../pages/Dashboard";
 import Customers from "../pages/Customer";
 import CustomerDetail from "../pages/CustomerDetail";
 import ProtectedRoute from "./ProtectedRoutes";
-import FollowUps from "../pages/FollowUps";
+import FollowUps from "../pages/Followups";
 import CompletedFollowUps from "../pages/CompletedFollowUps";
 import TodayFollowUps from "../pages/TodayFollowUps";
 import Reports from "../pages/Reports";
