@@ -4,14 +4,16 @@ import Modal from "../common/Modal";
 const statusOptions = [
     { value: "PENDING", label: "Pending" },
     { value: "COMPLETED", label: "Completed" },
-    { value: "MISSED", label: "Missed" },
 ];
 
 function FollowUpForm({ isOpen, onClose, onSave, followup, customers }) {
     const [formData, setFormData] = useState({
         customer: "",
-        followup_date: "",
+        follow_up_date: "",
+        follow_up_time: "",
         notes: "",
+        priority: "Medium",
+        next_follow_up_date: "",
         status: "PENDING",
     });
 
@@ -19,8 +21,11 @@ function FollowUpForm({ isOpen, onClose, onSave, followup, customers }) {
         if (isOpen && followup) {
             setFormData({
                 customer: followup.customer || followup.customer_id || "",
-                followup_date: followup.followup_date || "",
+                follow_up_date: followup.follow_up_date || followup.followup_date || "",
+                follow_up_time: followup.follow_up_time || "",
                 notes: followup.notes || "",
+                priority: followup.priority || "Medium",
+                next_follow_up_date: followup.next_follow_up_date || "",
                 status: (followup.status || "PENDING").toUpperCase(),
             });
         } else if (isOpen && customers.length > 0) {
@@ -31,8 +36,11 @@ function FollowUpForm({ isOpen, onClose, onSave, followup, customers }) {
         } else {
             setFormData({
                 customer: "",
-                followup_date: "",
+                follow_up_date: "",
+                follow_up_time: "",
                 notes: "",
+                priority: "Medium",
+                next_follow_up_date: "",
                 status: "PENDING",
             });
         }
@@ -82,8 +90,20 @@ function FollowUpForm({ isOpen, onClose, onSave, followup, customers }) {
                     <label className="block text-sm font-medium text-gray-700">Follow-up Date</label>
                     <input
                         type="date"
-                        name="followup_date"
-                        value={formData.followup_date}
+                        name="follow_up_date"
+                        value={formData.follow_up_date}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        required
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Follow-up Time</label>
+                    <input
+                        type="time"
+                        name="follow_up_time"
+                        value={formData.follow_up_time}
                         onChange={handleChange}
                         className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                         required
@@ -99,6 +119,31 @@ function FollowUpForm({ isOpen, onClose, onSave, followup, customers }) {
                         rows={4}
                         className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="Enter follow-up notes"
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Priority</label>
+                    <select
+                        name="priority"
+                        value={formData.priority}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Next Follow-up Date</label>
+                    <input
+                        type="date"
+                        name="next_follow_up_date"
+                        value={formData.next_follow_up_date}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
                 </div>
 

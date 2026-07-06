@@ -23,3 +23,13 @@ export const getFollowUpsByCustomer = async (customerId) => {
     const response = await api.get(`followups/?customer=${customerId}`);
     return response.data;
 };
+
+export const sendEmailReminder = async (followupData) => {
+    const response = await api.post("followups/send-reminder/", followupData);
+    return response.data;
+};
+
+export const exportFollowUpsCSV = async () => {
+    const response = await api.get("followups/export/", { responseType: 'blob' });
+    return response.data;
+};

@@ -5,6 +5,9 @@ import Customers from "../pages/Customer";
 import CustomerDetail from "../pages/CustomerDetail";
 import ProtectedRoute from "./ProtectedRoutes";
 import FollowUps from "../pages/FollowUps";
+import CompletedFollowUps from "../pages/CompletedFollowUps";
+import TodayFollowUps from "../pages/TodayFollowUps";
+import Reports from "../pages/Reports";
 
 function AppRoutes() {
     return (
@@ -22,6 +25,33 @@ function AppRoutes() {
                     }
                 />
                 <Route path="/followups" element={<FollowUps />} />
+
+                <Route
+                    path="/completed-followups"
+                    element={
+                        <ProtectedRoute>
+                            <CompletedFollowUps />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/today-followups"
+                    element={
+                        <ProtectedRoute>
+                            <TodayFollowUps />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/reports"
+                    element={
+                        <ProtectedRoute>
+                            <Reports />
+                        </ProtectedRoute>
+                    }
+                />
 
                 <Route
                     path="/customers"
